@@ -1,0 +1,10 @@
+/**************
+ Savings Form 
+**************/
+.savings-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+    width: 320px;
+    margin: 0 auto;
+}
