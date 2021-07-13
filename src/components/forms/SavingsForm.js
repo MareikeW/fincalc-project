@@ -37,11 +37,11 @@ const SavingsForm = () => {
             */
             for (let i = 1; i <= data.savingsPeriod; i++) {
                 yearlyCompoundedBalance.push(data.startingAmount * ((1 + ((data.returnRate / 100) / 12))**(12 * i)));
-                yearlyCompoundedContribution.push(data.contribution * (((1 + ((data.returnRate / 100) / 12))**(12 * data.savingsPeriod) - 1) / ((data.returnRate / 100) / 12)) * (1 + ((data.returnRate / 100) / 12)));
+                yearlyCompoundedContribution.push(data.contribution * (((1 + ((data.returnRate / 100) / 12))**(12 * i) - 1) / ((data.returnRate / 100) / 12)) * (1 + ((data.returnRate / 100) / 12)));
             }
        
             setEndBalance(yearlyCompoundedBalance[yearlyCompoundedBalance.length -1] + yearlyCompoundedContribution[yearlyCompoundedContribution.length - 1]);
-            setTotalContributions(Number(data.contribution * 12) * Number(data.savingsPeriod));
+            setTotalContributions(Number(data.startingAmount) + (Number(data.contribution * 12) * Number(data.savingsPeriod)));
 
             
         } else if (data.compound === "yearly") {
@@ -56,7 +56,7 @@ const SavingsForm = () => {
     }
 
     useEffect(() => {
-        setTotalInterest(Number(endBalance)  - (Number(data.startingAmount) + Number(totalContributions)));
+        setTotalInterest(Number(endBalance) - Number(totalContributions));
     }, [data, totalContributions, endBalance])
 
 
@@ -72,7 +72,7 @@ const SavingsForm = () => {
                     onChange={handleChange} 
                 />
 
-                <label htmlFor="regular-contribution">Regular Contribution</label>
+                <label htmlFor="regular-contribution">Regular Monthly Contribution</label>
                 <input 
                     type="number" 
                     name="contribution"
@@ -114,15 +114,15 @@ const SavingsForm = () => {
             </form>
 
             <h3>End Balance: {endBalance.toLocaleString("en-GB", {style: "currency", currency: "GBP"})}</h3>
-            <p>Starting Amount: {data.startingAmount}</p>
-            <p>Starting Amount: {data.contribution}</p>
-            <p>Starting Amount: {data.compound}</p>
-            <p>Starting Amount: {data.returnRate}</p>
-            <p>Starting Amount: {data.savingsPeriod}</p>
+            <p>Starting Amount: {data.startingAmount.toLocaleString("en-GB", {style: "currency", currency: "GBP"})}</p>
+            <p>Monthly Contribution: {data.contribution.toLocaleString("en-GB", {style: "currency", currency: "GBP"})}</p>
+            <p>Compound: {data.compound}</p>
+            <p>Return Rate: {data.returnRate}%</p>
+            <p>Savings Period: {data.savingsPeriod}</p>
             <br>
             </br>
-            <p>Total Contributions: {totalContributions}</p>
-            <p>Total Interest: " {totalInterest}</p>
+            <p>Total Contributions (Starting Amount + Monthly Contributions): {totalContributions.toLocaleString("en-GB", {style: "currency", currency: "GBP"})}</p>
+            <p>Total Interest: " {totalInterest.toLocaleString("en-GB", {style: "currency", currency: "GBP"})}</p>
         </div>
     )
 }
