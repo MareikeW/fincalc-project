@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./form-styles.scss";
 
 const SavingsForm = () => {
@@ -26,28 +26,23 @@ const SavingsForm = () => {
 
     const calcEndSavingsBalance = (event) => {
         event.preventDefault();
-        let compoundedStartingAmount = 0;
-        let compoundedContributions = 0;
+        let yearlyCompoundedBalance = [];
+        let yearlyCompoundedContribution = [];
 
         if (data.compound === "monthly") {
-            //console.log("Monthlyyy");
             /* Monthly Compound
             P = 5000. PMT = 100. r = 5/100 = 0.05 (decimal). n = 12. t = 10.
             Total = [ P(1+r/n)^(nt) ] + [ PMT × (((1 + r/n)^(nt) - 1) / (r/n)) × (1+r/n) ]
             Total = [ 5000 (1 + 0.05 / 12) ^ (12 × 10) ] + [ 100 × (((1 + 0.00416)^(12 × 10) - 1) / (0.00416)) × (1 + 0.05 / 12) ]
             */
-            compoundedStartingAmount = data.startingAmount * ((1 + ((data.returnRate / 100) / 12))**(12 * data.savingsPeriod));
-
-            compoundedContributions = data.contribution * (((1 + ((data.returnRate / 100) / 12))**(12 * data.savingsPeriod) - 1) / ((data.returnRate / 100) / 12)) * (1 + ((data.returnRate / 100) / 12));
-
-            setEndBalance(Number(compoundedStartingAmount) + Number(compoundedContributions));
-            console.log("End Balance: " + typeof endBalance);
-
+            for (let i = 1; i <= data.savingsPeriod; i++) {
+                yearlyCompoundedBalance.push(data.startingAmount * ((1 + ((data.returnRate / 100) / 12))**(12 * i)));
+                yearlyCompoundedContribution.push(data.contribution * (((1 + ((data.returnRate / 100) / 12))**(12 * data.savingsPeriod) - 1) / ((data.returnRate / 100) / 12)) * (1 + ((data.returnRate / 100) / 12)));
+            }
+       
+            setEndBalance(yearlyCompoundedBalance[yearlyCompoundedBalance.length -1] + yearlyCompoundedContribution[yearlyCompoundedContribution.length - 1]);
             setTotalContributions(Number(data.contribution * 12) * Number(data.savingsPeriod));
-            console.log("Total Contributions: " + totalContributions);
 
-            setTotalInterest(Number(endBalance)  - (Number(data.startingAmount) + Number(totalContributions)));
-            console.log("Total Interest: " + totalInterest);
             
         } else if (data.compound === "yearly") {
             //console.log("Yearlyyy");
@@ -59,6 +54,10 @@ const SavingsForm = () => {
             
         }
     }
+
+    useEffect(() => {
+        setTotalInterest(Number(endBalance)  - (Number(data.startingAmount) + Number(totalContributions)));
+    }, [data, totalContributions, endBalance])
 
 
     return (
@@ -120,6 +119,10 @@ const SavingsForm = () => {
             <p>Starting Amount: {data.compound}</p>
             <p>Starting Amount: {data.returnRate}</p>
             <p>Starting Amount: {data.savingsPeriod}</p>
+            <br>
+            </br>
+            <p>Total Contributions: {totalContributions}</p>
+            <p>Total Interest: " {totalInterest}</p>
         </div>
     )
 }
