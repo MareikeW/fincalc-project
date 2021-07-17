@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./form-styles.scss";
+import SavingsChart from "../charts/SavingsChart";
 
 const SavingsForm = () => {
     const [data, setData] = useState({
@@ -120,6 +121,8 @@ const SavingsForm = () => {
             </br>
             <p>Total Contributions (Starting Amount + Monthly Contributions): {totalContributions.toLocaleString("en-GB", {style: "currency", currency: "GBP"})}</p>
             <p>Total Interest: " {totalInterest.toLocaleString("en-GB", {style: "currency", currency: "GBP"})}</p>
+
+            <SavingsChart />
         </div>
     )
 }
