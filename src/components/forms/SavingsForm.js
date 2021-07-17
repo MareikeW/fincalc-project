@@ -10,6 +10,8 @@ const SavingsForm = () => {
         returnRate: 0,
         savingsPeriod: 0
     })
+    const [yearlyEndBalances, setYearlyEndBalances] = useState([]);
+    const [years, setYears] = useState(0);
     const [endBalance, setEndBalance] = useState(0);
     const [totalContributions, setTotalContributions] = useState(0);
     const [totalInterest, setTotalInterest] = useState(0);
@@ -27,8 +29,9 @@ const SavingsForm = () => {
 
     const calcEndSavingsBalance = (event) => {
         event.preventDefault();
-        let yearlyEndBalance = [];
         
+        let yearlyEndBalance = [];
+        let years = [];
 
         if (data.compound === "monthly") {
             /* Monthly Compound
@@ -37,6 +40,7 @@ const SavingsForm = () => {
             */
             for (let i = 1; i <= data.savingsPeriod; i++) {
                 yearlyEndBalance.push((data.startingAmount * ((1 + ((data.returnRate / 100) / 12))**(12 * i))) + data.contribution * (((1 + ((data.returnRate / 100) / 12))**(12 * i) - 1) / ((data.returnRate / 100) / 12)));
+                years.push(i);
             }
 
             console.log("Monthly Compound: " + yearlyEndBalance)    
@@ -44,11 +48,14 @@ const SavingsForm = () => {
             /* Yearly Compound */
             for (let i = 1; i <= data.savingsPeriod; i++) {
                 yearlyEndBalance.push((data.startingAmount * ((1 + (data.returnRate / 100))**i)) + data.contribution * ((((1 + (data.returnRate / 100))**i) - 1) / ((data.returnRate / 100) / 12)));
+                years.push(i);
             }
             
             console.log("Yearly Compound: " + yearlyEndBalance)
         }
 
+        setYears(years);
+        setYearlyEndBalances(yearlyEndBalance);
         setEndBalance(yearlyEndBalance[yearlyEndBalance.length - 1]);
         setTotalContributions(Number(data.startingAmount) + (Number(data.contribution * 12) * Number(data.savingsPeriod)));
     }
@@ -121,8 +128,8 @@ const SavingsForm = () => {
             </br>
             <p>Total Contributions (Starting Amount + Monthly Contributions): {totalContributions.toLocaleString("en-GB", {style: "currency", currency: "GBP"})}</p>
             <p>Total Interest: " {totalInterest.toLocaleString("en-GB", {style: "currency", currency: "GBP"})}</p>
-
-            <SavingsChart />
+            {endBalance > 0 ? <SavingsChart years={years} endBalanceArray={yearlyEndBalances}/> : null}
+            
         </div>
     )
 }
