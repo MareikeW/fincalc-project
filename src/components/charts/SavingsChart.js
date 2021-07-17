@@ -29,18 +29,28 @@ const SavingsChart = ({years, endBalanceArray}) => {
       
       const options = {
         scales: {
-            yAxes: [
-              {
+            yAxes: [{
                 ticks: {
                   beginAtZero: true,
+                  /* this is correct in Vanilla JS chart.js
+                    callback: function(value) {
+                        return value.toLocaleString("en-GB", {style: "currency", currency: "GBP"})
+                    }
+                */
+                // Apparently, something is wrong with this
+                  callback: function(value, index, values) {
+                    return value.toLocaleString("en-GB", {style: "currency", currency: "GBP"});
+                  }
                 },
-              },
-            ],
+            }],
           },
       };
       return ( 
         <>
-            <Line data={data} options={options} />
+            <Line 
+                data={data} 
+                options={options}
+            />
         </>
     );
 }
