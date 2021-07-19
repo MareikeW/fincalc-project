@@ -1,8 +1,7 @@
 // Create One Time Investment Form
 
 import React, { useState } from "react";
-import { Pie } from 'react-chartjs-2'
-
+import OneTimeInvChart from '../charts/OneTimeInvChart'
 
 const Calculator = () => {
   const [investmentAmount, setInvestmentAmount] = useState(25000);
@@ -92,7 +91,7 @@ const Calculator = () => {
     </p>
   </div>
 )}
-<Pie data={data} />
+<OneTimeInvChart calculate={calculate} investmentAmount={investmentAmount} />
 </>
   );
 };
