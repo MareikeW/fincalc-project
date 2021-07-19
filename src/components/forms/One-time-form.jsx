@@ -1,13 +1,15 @@
 // Create One Time Investment Form
 
 import React, { useState } from "react";
+import { Pie } from 'react-chartjs-2'
+
 
 const Calculator = () => {
-  const [investmentAmount, setInvestmentAmount] = useState(0);
-  const [expectedPA, setExpectedPA] = useState(0);
-  const [tenure, setTenure] = useState(0);
+  const [investmentAmount, setInvestmentAmount] = useState(25000);
+  const [expectedPA, setExpectedPA] = useState(15);
+  const [tenure, setTenure] = useState(10);
   const [showResult, setShowResult] = useState(false);
-
+  
   const handleSubmit = (evt) => {
     evt.preventDefault();
     calculate();
@@ -19,7 +21,23 @@ const Calculator = () => {
     return +res.toFixed(2);
   }
 
+  const data = {
+    labels: ['Est.Returns', 'Invested Amount'],
+    datasets: [
+      {
+        data: [calculate() - investmentAmount, investmentAmount],
+        backgroundColor: [
+          '#5367FF',
+          '#00D09C'
+        ],
+        borderWidth: 3,
+      },
+    ],
+  };
+
+  
   return (
+    <>
     <form onSubmit={handleSubmit}>
       <div className="form__input-group">
         <label htmlFor="amount" className="form__label">
@@ -62,18 +80,20 @@ const Calculator = () => {
       <button type="submit" className="form__btn">
         Calculate
       </button>
-      {showResult && (
-        <div className="result">
-          <p className="result__corpus">Your corpus value : {calculate()}</p>
-          <p className="result__earnings">
-            Total earnings : {calculate() - investmentAmount}
-          </p>
-          <p className="result__deposited-amount">
-            Total deposited amount : {investmentAmount}
-          </p>
-        </div>
-      )}
     </form>
+{showResult && (
+  <div className="result">
+    <p className="result__corpus">Your corpus value : {calculate()}</p>
+    <p className="result__earnings">
+      Total earnings : {calculate() - investmentAmount}
+    </p>
+    <p className="result__deposited-amount">
+      Total deposited amount : {investmentAmount}
+    </p>
+  </div>
+)}
+<Pie data={data} />
+</>
   );
 };
 
