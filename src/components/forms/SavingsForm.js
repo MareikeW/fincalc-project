@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./form-styles.scss";
+import SavingsChart from "../charts/SavingsChart";
+import SavingsTable from "../tables/SavingsTable";
 
 const SavingsForm = () => {
     const [data, setData] = useState({
@@ -9,9 +11,10 @@ const SavingsForm = () => {
         returnRate: 0,
         savingsPeriod: 0
     })
-    const [endBalance, setEndBalance] = useState(0);
-    const [totalContributions, setTotalContributions] = useState(0);
-    const [totalInterest, setTotalInterest] = useState(0);
+    const [yearlyEndBalances, setYearlyEndBalances] = useState([]);
+    const [years, setYears] = useState([]);
+    const [interests, setInterests] = useState([]);
+    const [contributions, setContributions] = useState([]);
 
 
     const handleChange = event => {
@@ -24,10 +27,22 @@ const SavingsForm = () => {
         })
     }
 
-    const calcEndSavingsBalance = (event) => {
+    function calcInterest(yearlyEndBalanceArray, yearlyContributionsArray, yearsArray) {
+        let interestsArray = [];
+
+        for (let i = 0; i < yearsArray.length; i++) {
+            interestsArray.push(yearlyEndBalanceArray[i] - yearlyContributionsArray[i]);
+        }
+
+        setInterests(interestsArray);
+    }
+
+    const calcResult = (event) => {
         event.preventDefault();
-        let yearlyEndBalance = [];
         
+        let yearlyEndBalanceArray = [];
+        let yearsArray = [];
+        let yearlyContributionsArray = [];
 
         if (data.compound === "monthly") {
             /* Monthly Compound
@@ -35,31 +50,32 @@ const SavingsForm = () => {
             Total = [ P(1+r/n)^(nt) ] + [ PMT × (((1 + r/n)^(nt) - 1) / (r/n)) ]
             */
             for (let i = 1; i <= data.savingsPeriod; i++) {
-                yearlyEndBalance.push((data.startingAmount * ((1 + ((data.returnRate / 100) / 12))**(12 * i))) + data.contribution * (((1 + ((data.returnRate / 100) / 12))**(12 * i) - 1) / ((data.returnRate / 100) / 12)));
+                yearsArray.push(i);
+                yearlyContributionsArray.push(12 * data.contribution);
+                yearlyEndBalanceArray.push((data.startingAmount * ((1 + ((data.returnRate / 100) / 12))**(12 * i))) + data.contribution * (((1 + ((data.returnRate / 100) / 12))**(12 * i) - 1) / ((data.returnRate / 100) / 12)));    
             }
-
-            console.log("Monthly Compound: " + yearlyEndBalance)    
+            calcInterest(yearlyEndBalanceArray, yearlyContributionsArray, yearsArray);
+            //console.log("Monthly Compound: " + yearlyEndBalance)    
         } else if (data.compound === "yearly") {
             /* Yearly Compound */
             for (let i = 1; i <= data.savingsPeriod; i++) {
-                yearlyEndBalance.push((data.startingAmount * ((1 + (data.returnRate / 100))**i)) + data.contribution * ((((1 + (data.returnRate / 100))**i) - 1) / ((data.returnRate / 100) / 12)));
+                yearsArray.push(i);
+                yearlyContributionsArray.push(12 * data.contribution);
+                yearlyEndBalanceArray.push((data.startingAmount * ((1 + (data.returnRate / 100))**i)) + data.contribution * ((((1 + (data.returnRate / 100))**i) - 1) / ((data.returnRate / 100) / 12)));
             }
-            
-            console.log("Yearly Compound: " + yearlyEndBalance)
         }
 
-        setEndBalance(yearlyEndBalance[yearlyEndBalance.length - 1]);
-        setTotalContributions(Number(data.startingAmount) + (Number(data.contribution * 12) * Number(data.savingsPeriod)));
+        setYears([...yearsArray])
+        setContributions([...yearlyContributionsArray]);
+        setYearlyEndBalances([...yearlyEndBalanceArray]);
     }
 
-    useEffect(() => {
-        setTotalInterest(Number(endBalance) - Number(totalContributions));
-    }, [data, totalContributions, endBalance])
+    
 
 
     return (
         <div>
-            <form className="savings-form" onSubmit={calcEndSavingsBalance}>
+            <form className="savings-form" onSubmit={calcResult}>
                 <label htmlFor="starting-amount">Starting Amount</label>
                 <input 
                     type="number" 
@@ -110,16 +126,11 @@ const SavingsForm = () => {
                 <button type="submit">Calculate</button>
             </form>
 
-            <h3>End Balance: {endBalance.toLocaleString("en-GB", {style: "currency", currency: "GBP"})}</h3>
-            <p>Starting Amount: {data.startingAmount.toLocaleString("en-GB", {style: "currency", currency: "GBP"})}</p>
-            <p>Monthly Contribution: {data.contribution.toLocaleString("en-GB", {style: "currency", currency: "GBP"})}</p>
-            <p>Compound: {data.compound}</p>
-            <p>Return Rate: {data.returnRate}%</p>
-            <p>Savings Period: {data.savingsPeriod}</p>
-            <br>
-            </br>
-            <p>Total Contributions (Starting Amount + Monthly Contributions): {totalContributions.toLocaleString("en-GB", {style: "currency", currency: "GBP"})}</p>
-            <p>Total Interest: " {totalInterest.toLocaleString("en-GB", {style: "currency", currency: "GBP"})}</p>
+            
+            {yearlyEndBalances[yearlyEndBalances.length - 1] > 0 ? <SavingsChart years={years} endBalanceArray={yearlyEndBalances}/> : null}
+
+            {yearlyEndBalances[yearlyEndBalances.length - 1] > 0 ? <SavingsTable years={years} yearlyEndBalances={yearlyEndBalances} contribution={contributions} interests={interests} /> : null}
+            
         </div>
     )
 }
