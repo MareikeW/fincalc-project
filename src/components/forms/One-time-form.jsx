@@ -20,21 +20,6 @@ const Calculator = () => {
     return +res.toFixed(2);
   }
 
-  const data = {
-    labels: ['Est.Returns', 'Invested Amount'],
-    datasets: [
-      {
-        data: [calculate() - investmentAmount, investmentAmount],
-        backgroundColor: [
-          '#5367FF',
-          '#00D09C'
-        ],
-        borderWidth: 3,
-      },
-    ],
-  };
-
-  
   return (
     <>
     <form onSubmit={handleSubmit}>
