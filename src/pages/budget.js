@@ -3,7 +3,10 @@ import BudgetForm from "../components/forms/budget-form";
 
 const Budget = () => {
     return (
-        <BudgetForm />
+        <div>
+            <h1>Budget Planner</h1>
+            <BudgetForm />
+        </div>
     )
 }
 
