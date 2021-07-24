@@ -10,14 +10,18 @@ const SavingsForm = () => {
         compound: "monthly",
         returnRate: 0,
         savingsPeriod: 0
-    })
+    });
+
     const [yearlyEndBalances, setYearlyEndBalances] = useState([]);
     const [years, setYears] = useState([]);
     const [interests, setInterests] = useState([]);
     const [contributions, setContributions] = useState([]);
 
+    const [isButtonClicked, setIsButtonClicked] = useState(false);
 
     const handleChange = event => {
+        setIsButtonClicked(false);
+
         const {name, value} = event.target;
         setData(prevData => {
             return {
@@ -53,9 +57,7 @@ const SavingsForm = () => {
                 yearsArray.push(i);
                 yearlyContributionsArray.push(12 * data.contribution);
                 yearlyEndBalanceArray.push((data.startingAmount * ((1 + ((data.returnRate / 100) / 12))**(12 * i))) + data.contribution * (((1 + ((data.returnRate / 100) / 12))**(12 * i) - 1) / ((data.returnRate / 100) / 12)));    
-            }
-            calcInterest(yearlyEndBalanceArray, yearlyContributionsArray, yearsArray);
-            //console.log("Monthly Compound: " + yearlyEndBalance)    
+            }  
         } else if (data.compound === "yearly") {
             /* Yearly Compound */
             for (let i = 1; i <= data.savingsPeriod; i++) {
@@ -65,13 +67,13 @@ const SavingsForm = () => {
             }
         }
 
-        setYears([...yearsArray])
-        setContributions([...yearlyContributionsArray]);
-        setYearlyEndBalances([...yearlyEndBalanceArray]);
+        setYears(yearsArray)
+        setContributions(yearlyContributionsArray);
+        setYearlyEndBalances(yearlyEndBalanceArray);
+        calcInterest(yearlyEndBalanceArray, yearlyContributionsArray, yearsArray);
+
+        setIsButtonClicked(true);
     }
-
-    
-
 
     return (
         <div>
@@ -82,7 +84,8 @@ const SavingsForm = () => {
                     name="startingAmount" 
                     id="starting-amount" 
                     value={data.startingAmount} 
-                    onChange={handleChange} 
+                    onChange={handleChange}
+                    required 
                 />
 
                 <label htmlFor="regular-contribution">Regular Monthly Contribution</label>
@@ -92,6 +95,7 @@ const SavingsForm = () => {
                     id="regular-contribution"
                     value={data.contribution}
                     onChange={handleChange}
+                    required
                 />
 
                 <label htmlFor="compound">Compound</label>
@@ -112,6 +116,7 @@ const SavingsForm = () => {
                     id="return-rate"
                     value={data.returnRate}
                     onChange={handleChange}
+                    required
                 />
 
                 <label htmlFor="savings-period">Savings Period</label>
@@ -120,16 +125,17 @@ const SavingsForm = () => {
                     name="savingsPeriod" 
                     id="savings-period" 
                     value={data.savingsPeriod}
-                    onChange={handleChange} 
+                    onChange={handleChange}
+                    required 
                 />
 
                 <button type="submit">Calculate</button>
             </form>
 
             
-            {yearlyEndBalances[yearlyEndBalances.length - 1] > 0 ? <SavingsChart years={years} endBalanceArray={yearlyEndBalances}/> : null}
+            {isButtonClicked ? <SavingsChart years={years} endBalanceArray={yearlyEndBalances}/> : null}
 
-            {yearlyEndBalances[yearlyEndBalances.length - 1] > 0 ? <SavingsTable years={years} yearlyEndBalances={yearlyEndBalances} contribution={contributions} interests={interests} /> : null}
+            {isButtonClicked ? <SavingsTable years={years} yearlyEndBalances={yearlyEndBalances} contribution={contributions} interests={interests} /> : null}
             
         </div>
     )
