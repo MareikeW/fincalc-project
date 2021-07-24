@@ -3,7 +3,6 @@ import { Line } from 'react-chartjs-2';
 
 
 const SavingsChart = ({years, endBalanceArray}) => {
-    //console.log("endBalances " + endBalanceArray)
     const data = {
         labels: [],
         datasets: [
@@ -23,7 +22,6 @@ const SavingsChart = ({years, endBalanceArray}) => {
           )
           data.datasets[0].data.push(
               endBalanceArray[i]
-        
           )
       }
       
@@ -34,20 +32,20 @@ const SavingsChart = ({years, endBalanceArray}) => {
                   beginAtZero: true,
                   /* this is correct in Vanilla JS chart.js
                     callback: function(value) {
-                        return value.toLocaleString("en-GB", {style: "currency", currency: "GBP"})
+                        return value.toLocaleString("en-US", {style: "currency", currency: "USD"})
                     }
                 */
                 // Apparently, something is wrong with this
                   callback: function(value, index, values) {
-                    return value.toLocaleString("en-GB", {style: "currency", currency: "GBP"});
+                    return value.toLocaleString("en-US", {style: "currency", currency: "USD"});
                   }
                 },
             }],
-          },
+          }
       };
       return ( 
         <>
-            <Line 
+            <Line
                 data={data} 
                 options={options}
             />
