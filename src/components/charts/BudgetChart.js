@@ -10,7 +10,7 @@ const BudgetChart = ({budgetData}) => {
                 'Personal', 'Recreation', 'Charity', 'Debt'],
         datasets: [
           {
-            label: '# of Votes',
+            label: '# of Budget',
             data: [Number(saving), Number(housing), Number(utilities), Number(food), Number(transportation), 
                 Number(clothing), Number(misc), Number(personal), Number(recreation), Number(charity), Number(debt)],
             backgroundColor: [
@@ -48,11 +48,25 @@ const BudgetChart = ({budgetData}) => {
         ],
     };
 
+    const options = {
+        tooltips: {
+            callbacks: {
+                hello: console.log("Hellooooo"),
+              label: function(tooltip) { 
+                  //console.log(tooltip)
+                //return value + "$";
+                // Tooltip should have either a percentage or a $-sign for now
+              }
+            }
+          }
+    }
+
 
     return (
         <div className="budget__chart">
             <Doughnut 
                 data={data}
+                options={options}
             /> 
         </div>
     )
