@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import BudgetChart from "../charts/BudgetChart";
 
 const BudgetForm = () => {
     const [budgetData, setBudgetData] = useState({
@@ -59,7 +60,7 @@ const BudgetForm = () => {
                     onChange={handleChange}
                 />
 
-                <label htmlFor="saving">Saving</label>
+                <label htmlFor="saving">Savings</label>
                 <input 
                     id="saving" 
                     name="saving" 
@@ -173,6 +174,8 @@ const BudgetForm = () => {
             </form>
 
             {!isButtonClicked ? null : difference >= 1 ? <p>Difference: {difference} - You can allocate some more money!</p> : <p>Difference: {difference} - You successfully allocated all your money!</p>}
+        
+            {isButtonClicked ? <BudgetChart budgetData={budgetData}/> : null}
         </div>
     )
 }
