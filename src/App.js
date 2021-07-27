@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Savings from "./pages/savings";
 import OneTimeInvForm from './components/forms/One-time-form';
 import RetirementSavings from './components/forms/Retirement-savings-form'
+import Budget from './pages/budget';
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
           </Route>
 
           <Route exact path="/budgetplanner">
-            Budgetplanner
+            <Budget />
           </Route>
 
           <Route exact path="/savings-calculator">

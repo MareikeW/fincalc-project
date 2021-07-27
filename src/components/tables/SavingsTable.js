@@ -7,9 +7,27 @@ const SavingsTable = ({years, yearlyEndBalances, contribution, interests}) => {
           savingsTable.push(
             <tr key={years[i]}>
               <td>{years[i]}</td>
-              <td>{contribution[i]}</td>
-              <td>{interests[i]}</td>
-              <td>{yearlyEndBalances[i]}</td>
+
+              <td>
+                {
+                  contribution[i].toLocaleString("en-US", {
+                    style: "currency",
+                    currency: "USD"
+                  })
+                }
+              </td>
+              <td>{
+                  interests[i].toLocaleString("en-US", {
+                    style: "currency",
+                    currency: "USD"
+                  })
+                }</td>
+              <td>{
+                  yearlyEndBalances[i].toLocaleString("en-US", {
+                    style: "currency",
+                    currency: "USD"
+                  })
+                }</td>
             </tr>
           );
         }

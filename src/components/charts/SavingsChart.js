@@ -1,9 +1,9 @@
 import React from "react";
 import { Line } from 'react-chartjs-2';
+import "./charts-styles.scss";
 
 
 const SavingsChart = ({years, endBalanceArray}) => {
-    //console.log("endBalances " + endBalanceArray)
     const data = {
         labels: [],
         datasets: [
@@ -23,35 +23,53 @@ const SavingsChart = ({years, endBalanceArray}) => {
           )
           data.datasets[0].data.push(
               endBalanceArray[i]
-        
           )
       }
       
       const options = {
         scales: {
-            yAxes: [{
+            y: {
                 ticks: {
                   beginAtZero: true,
-                  /* this is correct in Vanilla JS chart.js
-                    callback: function(value) {
-                        return value.toLocaleString("en-GB", {style: "currency", currency: "GBP"})
-                    }
-                */
-                // Apparently, something is wrong with this
                   callback: function(value, index, values) {
-                    return value.toLocaleString("en-GB", {style: "currency", currency: "GBP"});
-                  }
+                    console.log("value: " + value)
+                      let number = value.toLocaleString("en-US", {style: "currency", currency: "USD"});
+                      return number;
+                    }
                 },
-            }],
+                title: {
+                  display: true,
+                  text: "Endbalance"
+                }
+            },
+            x: {
+              title: {
+                display: true,
+                text: "Years"
+              }
+            },
           },
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  let number = context.dataset.data[context.dataIndex].toLocaleString("en-US", {style: "currency", currency: "USD"});
+                  return number;
+                }
+              }
+            }
+          }
       };
+
       return ( 
-        <>
-            <Line 
+        <div className="savings__chart">
+            <Line
                 data={data} 
                 options={options}
             />
-        </>
+        </div>
     );
 }
 export default SavingsChart;
