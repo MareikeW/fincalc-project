@@ -49,16 +49,17 @@ const BudgetChart = ({budgetData}) => {
     };
 
     const options = {
-        tooltips: {
+        plugins: {
+          tooltip: {
             callbacks: {
-                hello: console.log("Hellooooo"),
-              label: function(tooltip) { 
-                  //console.log(tooltip)
-                //return value + "$";
-                // Tooltip should have either a percentage or a $-sign for now
+              label: function(context) {
+                let number = context.dataset.data[context.dataIndex].toLocaleString("en-US", {style: "currency", currency: "USD"});
+                let budgetItem = context.label;
+                return `${budgetItem}: ${number}`
               }
             }
           }
+        }
     }
 
 
