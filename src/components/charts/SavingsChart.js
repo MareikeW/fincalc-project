@@ -28,24 +28,41 @@ const SavingsChart = ({years, endBalanceArray}) => {
       
       const options = {
         scales: {
-            yAxes: [{
+            y: {
                 ticks: {
                   beginAtZero: true,
-                  /* this is correct in Vanilla JS chart.js
-                    callback: function(value) {
-                        return value.toLocaleString("en-US", {style: "currency", currency: "USD"})
-                    }
-                */
-                // Apparently, something is wrong with this
                   callback: function(value, index, values) {
-                    return value.toLocaleString("en-US", {style: "currency", currency: "USD"});
-                  }
+                    console.log("value: " + value)
+                      let number = value.toLocaleString("en-US", {style: "currency", currency: "USD"});
+                      return number;
+                    }
                 },
-            }],
+                title: {
+                  display: true,
+                  text: "Endbalance"
+                }
+            },
+            x: {
+              title: {
+                display: true,
+                text: "Years"
+              }
+            },
           },
           responsive: true,
-          maintainAspectRatio: false
+          maintainAspectRatio: false,
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  let number = context.dataset.data[context.dataIndex].toLocaleString("en-US", {style: "currency", currency: "USD"});
+                  return number;
+                }
+              }
+            }
+          }
       };
+
       return ( 
         <div className="savings__chart">
             <Line
