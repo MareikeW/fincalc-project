@@ -6,7 +6,7 @@ const OneTimeInvChart = ({ calculate, investmentAmount }) => {
     labels: ["Est.Returns", "Invested Amount"],
     datasets: [
       {
-        data: [calculate() - investmentAmount, investmentAmount],
+        data: [investmentAmount, investmentAmount],
         backgroundColor: ["#5367FF", "#00D09C"],
         borderWidth: 3,
       },

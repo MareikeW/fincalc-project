@@ -1,7 +1,7 @@
 import './App.scss';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Savings from "./pages/savings";
-import OneTimeInvChart from './components/charts/OneTimeInvChart';
+import OneTimeInvForm from './components/forms/One-time-form';
 import RetirementSavings from './components/forms/Retirement-savings-form'
 
 function App() {
@@ -22,7 +22,7 @@ function App() {
           </Route>
 
           <Route exact path="/onetime-investment">
-            <OneTimeInvChart />
+            <OneTimeInvForm />
           </Route>
 
           <Route exact path="/retirement-savings">
