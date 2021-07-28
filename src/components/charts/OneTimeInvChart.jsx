@@ -1,19 +1,38 @@
-import React from "react";
-import { Pie } from "react-chartjs-2";
+import React from 'react'
+import { Line } from 'react-chartjs-2'
+import './charts-styles.scss'
 
-const OneTimeInvChart = ({ calculate, investmentAmount }) => {
-  const data = {
-    labels: ["Est.Returns", "Invested Amount"],
-    datasets: [
+const options = {
+  scales: {
+    yAxes: [
       {
-        data: [calculate() - investmentAmount, investmentAmount],
-        backgroundColor: ["#5367FF", "#00D09C"],
-        borderWidth: 3,
+        ticks: {
+          beginAtZero: true,
+        },
       },
     ],
-  };
-
-  return <Pie data={data} />;
+  },
 };
 
-export default OneTimeInvChart;
+const OneTimeInvChart = ({ endBalance }) => {
+  console.log(endBalance)
+  const data = {
+    labels: Array.from({ length : endBalance.length}, (_,idx) => idx+1),
+    datasets : [
+      {
+        label: '# of EndBalance',
+        data: endBalance,
+        fill: false,
+      backgroundColor: 'rgb(255, 99, 132)',
+      borderColor: 'rgba(255, 99, 132, 0.2)',
+      }
+    ]
+  }
+  return(
+    <div className='compound__chart'>
+      <Line data={data} options={options} />
+    </div>
+  )
+}
+
+export default OneTimeInvChart
