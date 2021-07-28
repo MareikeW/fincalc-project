@@ -111,7 +111,7 @@ return (
 
             <button type="submit">Calculate</button>
         </form>
-        <OneTimeInvestmentChart endBalance={yearlyEndBalances} startingBalance={yearlyStartingBalances} />
+        <OneTimeInvestmentChart endBalance={yearlyEndBalances} />
     </div>
   );
 };
