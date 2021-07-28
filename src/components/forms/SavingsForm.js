@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./form-styles.scss";
 import SavingsChart from "../charts/SavingsChart";
 import SavingsTable from "../tables/SavingsTable";
@@ -13,6 +13,7 @@ const SavingsForm = () => {
     });
 
     const [yearlyEndBalances, setYearlyEndBalances] = useState([]);
+    const [yearlyStartingBalances, setYearlyStartingBalances] = useState([]);
     const [years, setYears] = useState([]);
     const [interests, setInterests] = useState([]);
     const [contributions, setContributions] = useState([]);
@@ -31,15 +32,31 @@ const SavingsForm = () => {
         })
     }
 
-    function calcInterest(yearlyEndBalanceArray, yearlyContributionsArray, yearsArray) {
-        let interestsArray = [];
+    useEffect(() => {
+        let yearlyInterestsArray = [];
 
-        for (let i = 0; i < yearsArray.length; i++) {
-            interestsArray.push(yearlyEndBalanceArray[i] - yearlyContributionsArray[i]);
-        }
+        yearlyInterestsArray = yearlyEndBalances.map((currentValue, index) => {
+            return currentValue - contributions[index] - yearlyStartingBalances[index]
+        })
 
-        setInterests(interestsArray);
+        setInterests(yearlyInterestsArray);
+
+        yearlyInterestsArray.length > 0 ? setIsButtonClicked(true) : setIsButtonClicked(false)
+
+    }, [contributions, yearlyStartingBalances, yearlyEndBalances]);
+
+
+    function calcStartingBalances(yearlyEndBalanceArray) {
+        let yearlyStartingBalancesArray = [];
+        
+        // currentValue has to be declared otherwise it returns "undefined".
+        yearlyStartingBalancesArray = yearlyEndBalanceArray.map((currentValue, index, array) => {
+            return index === 0 ? Number(data.startingAmount) : array[index - 1];
+        })
+
+        setYearlyStartingBalances(yearlyStartingBalancesArray);
     }
+
 
     const calcResult = (event) => {
         event.preventDefault();
@@ -67,12 +84,13 @@ const SavingsForm = () => {
             }
         }
 
+        calcStartingBalances(yearlyEndBalanceArray);
+
         setYears(yearsArray)
         setContributions(yearlyContributionsArray);
         setYearlyEndBalances(yearlyEndBalanceArray);
-        calcInterest(yearlyEndBalanceArray, yearlyContributionsArray, yearsArray);
 
-        setIsButtonClicked(true);
+        
     }
 
     return (
@@ -135,8 +153,7 @@ const SavingsForm = () => {
             
             {isButtonClicked ? <SavingsChart years={years} endBalanceArray={yearlyEndBalances}/> : null}
 
-            {isButtonClicked ? <SavingsTable years={years} yearlyEndBalances={yearlyEndBalances} contribution={contributions} interests={interests} /> : null}
-            
+            {isButtonClicked ? <SavingsTable years={years} yearlyStartingBalances={yearlyStartingBalances} yearlyEndBalances={yearlyEndBalances} contribution={contributions} interests={interests} /> : null}
         </div>
     )
 }

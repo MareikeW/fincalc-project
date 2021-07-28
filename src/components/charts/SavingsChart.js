@@ -31,8 +31,7 @@ const SavingsChart = ({years, endBalanceArray}) => {
             y: {
                 ticks: {
                   beginAtZero: true,
-                  callback: function(value, index, values) {
-                    console.log("value: " + value)
+                  callback: function(value) {
                       let number = value.toLocaleString("en-US", {style: "currency", currency: "USD"});
                       return number;
                     }
