@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-//import OneTimeInvChart from '../charts/OneTimeInvChart'
+import OneTimeInvestmentChart from '../charts/OneTimeInvChart'
 
 const CompoundInterestCalculator = () => {
   const [data, setData] = useState({
@@ -111,6 +111,7 @@ return (
 
             <button type="submit">Calculate</button>
         </form>
+        <OneTimeInvestmentChart endBalance={yearlyEndBalances} startingBalance={yearlyStartingBalances} />
     </div>
   );
 };
