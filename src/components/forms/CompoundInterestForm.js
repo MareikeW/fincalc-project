@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import OneTimeInvestmentChart from '../charts/OneTimeInvChart'
+import CompoundInterestTable from '../tables/CompoundInterestTable'
 
 const CompoundInterestCalculator = () => {
   const [data, setData] = useState({
@@ -111,7 +112,16 @@ return (
 
             <button type="submit">Calculate</button>
         </form>
+        <div className='wrapper'>
         <OneTimeInvestmentChart endBalance={yearlyEndBalances} />
+       
+        <CompoundInterestTable 
+          startingBalance={yearlyStartingBalances} 
+          endBalance={yearlyEndBalances} 
+          years={years} 
+          interests={interests}
+        />
+        </div>
     </div>
   );
 };
