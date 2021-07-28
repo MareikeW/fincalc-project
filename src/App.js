@@ -1,7 +1,7 @@
 import './App.scss';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Savings from "./pages/savings";
-import OneTimeInvForm from './components/forms/One-time-form';
+import CompoundInterest from './pages/compoundinterest';
 import RetirementSavings from './components/forms/Retirement-savings-form'
 import Budget from './pages/budget';
 
@@ -22,8 +22,8 @@ function App() {
             <Savings />
           </Route>
 
-          <Route exact path="/onetime-investment">
-            <OneTimeInvForm />
+          <Route exact path="/compoundinterest-calculator">
+            <CompoundInterest />
           </Route>
 
           <Route exact path="/retirement-savings">
