@@ -1,9 +1,7 @@
-// Create One Time Investment Form
-
 import React, { useState } from "react";
-import OneTimeInvChart from '../charts/OneTimeInvChart'
+//import OneTimeInvChart from '../charts/OneTimeInvChart'
 
-const Calculator = () => {
+const CompoundInterestCalculator = () => {
   const [investmentAmount, setInvestmentAmount] = useState(25000);
   const [expectedPA, setExpectedPA] = useState(15);
   const [tenure, setTenure] = useState(10);
@@ -77,14 +75,11 @@ const Calculator = () => {
             Total deposited amount : {investmentAmount}
           </p>
         </div>
-         <OneTimeInvChart
-         calculate={calculate}
-         investmentAmount={investmentAmount}
-       />
+         
        </>
       )}
     </>
   );
 };
 
-export default Calculator;
+export default CompoundInterestCalculator;
