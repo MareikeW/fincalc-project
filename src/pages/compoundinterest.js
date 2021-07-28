@@ -1,5 +1,5 @@
 import React from "react";
-import CompoundInterestCalculator from "../components/forms/One-time-form";
+import CompoundInterestCalculator from "../components/forms/CompoundInterestForm";
 
 const CompoundInterest = () => {
     return (
