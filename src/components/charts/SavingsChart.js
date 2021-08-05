@@ -5,26 +5,17 @@ import "./charts-styles.scss";
 
 const SavingsChart = ({years, endBalanceArray}) => {
     const data = {
-        labels: [],
+        labels: years,
         datasets: [
           {
             label: 'Yearly Endbalance',
-            data: [],
+            data: endBalanceArray,
             fill: false,
             backgroundColor: 'rgb(255, 99, 132)',
             borderColor: 'rgba(255, 99, 132, 0.2)',
           },
         ],
       };
-
-      for (let i = 0; i < years.length; i++) {
-          data.labels.push(
-              years[i]
-          )
-          data.datasets[0].data.push(
-              endBalanceArray[i]
-          )
-      }
       
       const options = {
         scales: {
