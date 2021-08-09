@@ -32,7 +32,6 @@ const Calculator = () => {
 
   return (
     <div>
-      <h2>How much money do u need to achieve your retirement target amount</h2>
       <form className="form" onSubmit={handleSubmit}>
         <div className="form__input-group">
           <label htmlFor="current-cost" className="form__label">

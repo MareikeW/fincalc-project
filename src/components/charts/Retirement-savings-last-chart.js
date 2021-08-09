@@ -3,13 +3,13 @@ import { Line } from 'react-chartjs-2';
 import "./charts-styles.scss";
 
 
-const SavingsChart = ({years, endBalanceArray}) => {
+const RetirementSavingsLastChart = ({years, balance}) => {
     const data = {
         labels: years,
         datasets: [
           {
             label: 'Yearly Endbalance',
-            data: endBalanceArray,
+            data: balance,
             fill: false,
             backgroundColor: 'rgb(255, 99, 132)',
             borderColor: 'rgba(255, 99, 132, 0.2)',
@@ -62,4 +62,4 @@ const SavingsChart = ({years, endBalanceArray}) => {
         </div>
     );
 }
-export default SavingsChart;
+export default RetirementSavingsLastChart;

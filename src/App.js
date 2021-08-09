@@ -1,8 +1,11 @@
 import './App.scss';
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Savings from "./pages/savings";
-import RetirementCalculators from './pages/retirement';
 import Home from './pages/home'
+import CompoundInterest from './pages/compoundinterest';
+import Budget from './pages/budget';
+import RetirementCalculators from './pages/retirement';
+
 
 function App() {
   return (
@@ -21,12 +24,12 @@ function App() {
             <Savings />
           </Route>
 
-          <Route exact path="/onetime-investment">
-            <OneTimeInvChart />
+          <Route exact path="/compoundinterest-calculator">
+            <CompoundInterest />
           </Route>
 
-          <Route exact path="/retirement-savings">
-            <RetirementSavings />
+          <Route exact path="/retirement-calculators">
+            <RetirementCalculators />
           </Route>
         </Switch>
       </Router>
