@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Savings from "./pages/savings";
 import OneTimeInvChart from './components/charts/OneTimeInvChart';
 import RetirementSavings from './components/forms/Retirement-savings-form';
+import RetirementCalculators from './pages/retirement';
 import Budget from './pages/budget';
 import Home from './pages/home'
 
