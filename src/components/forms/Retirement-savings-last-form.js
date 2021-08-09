@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import RetirementSavingsLastChart from "../charts/Retirement-savings-last-chart";
 
 const RetirementSavingsLastFor = () => {
     const [data, setData] = useState({
@@ -9,6 +10,7 @@ const RetirementSavingsLastFor = () => {
 
     const [isButtonClicked, setIsButtonClicked] = useState(false);
     const [years, setYears] = useState(0);
+    const [balance, setBalance] = useState(0);
 
     const handleChange = event => {
         setIsButtonClicked(false);
@@ -26,18 +28,25 @@ const RetirementSavingsLastFor = () => {
         event.preventDefault();
 
         let balance = data.savingsAmount;
+        let balanceArray = [data.savingsAmount];
+        let yearsArray = [0];
 
-        let i = 0;
+        let i = 1;
         while (balance > 0) {
             balance = (balance * (1 + data.returnRate / 100)) - data.expenses;
 
             if (balance < 0) {
                 setYears(i);
                 break;  
-            }
+            } 
 
+            yearsArray.push(i);
+            balanceArray.push(balance);
             i++;
         }
+
+        setYears(yearsArray);
+        setBalance(balanceArray);
         setIsButtonClicked(true);
     }
 
@@ -84,7 +93,8 @@ const RetirementSavingsLastFor = () => {
             </form>
 
             
-            {isButtonClicked ? <p>Your savings will last for: {years} years</p> : null}
+            {isButtonClicked ? <p>Your savings will last for: {years[years.length  - 1]} years</p> : null}
+            {isButtonClicked ? <RetirementSavingsLastChart years={years} balance={balance} /> : null}
         </div>
     )
 }
