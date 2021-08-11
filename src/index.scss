@@ -7,17 +7,24 @@ body {
   -moz-osx-font-smoothing: grayscale;
   margin-top: 150px;
 }
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
+.container{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.card-container{
+  align-self: center;
+  width: 75vw;
+}
 nav{
   background-color:#333;
   position:fixed;
   top:0;
-  width: 100%;
+  width: 100vw;
   ul{
     list-style-type: none;
     text-align: center;
@@ -34,26 +41,29 @@ nav{
     font-size: 16px;
 
     &:hover{
-      font-weight: bold;
-      text-decoration: underline;
+      color: rgba(0,127,255,1);
     }
 
   }
 }
 .home-hero{
-  width: 100%;
   padding: 60px 0;
-  background-color:lightblue;
+  background: rgb(0,127,255);
+  background: linear-gradient(90deg, rgba(0,127,255,1) 0%, rgba(0,253,255,1) 100%);
   text-align: center;
 }
-.calc-card{
-  margin-top: 25px;
-  padding: 15px;
+.card{
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 2px 2px 8px #cacaca;
   display: flex;
-  width: 100vw;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 15px;
+  margin: 25px 0;
+  justify-content: center;
   img{
-    width: 50%;
-    margin-right: 10px;
+    max-height: 250px;
   }
   a{
     width: fit-content;
@@ -65,7 +75,6 @@ nav{
 
     &:focus,
       &:hover{
-      // font-weight: bold;
       background-color: #0f0f0f;
       color: whitesmoke;
       border: none;
@@ -77,4 +86,5 @@ nav{
   width: 50%;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
