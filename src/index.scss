@@ -66,6 +66,7 @@ nav{
   img{
     max-width:50%;
     object-fit: cover;
+    max-height: 250px;
   }
   a{
     width: fit-content;
@@ -89,6 +90,6 @@ nav{
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  align-items: center;
   text-align: center;
+  align-items: center;
 }
