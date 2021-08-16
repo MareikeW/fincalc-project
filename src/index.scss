@@ -93,3 +93,43 @@ nav{
   text-align: center;
   align-items: center;
 }
+.budget-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+} 
+.table-container{
+  padding: 20px 40px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 2px 2px 8px #cacaca;
+
+  button{
+    width: 150px;
+    display: block;
+    margin: 0 auto;
+    padding: 10px 20px;
+    background-color: white;
+    border: 1px solid black;
+    margin-top: 15px;
+    cursor: pointer;
+    font-size: 16px;
+    &:focus,
+      &:hover{
+      background-color: #0f0f0f;
+      color: whitesmoke;
+      border: 1px solid transparent;
+    }
+  }
+  table td{
+    padding: 8px;
+  }
+  input{
+    padding: 10px 30px;
+    font-size: 16px;
+  }
+}
+
+
