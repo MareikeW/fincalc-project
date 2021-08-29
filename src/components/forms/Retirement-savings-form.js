@@ -16,7 +16,6 @@ const Calculator = () => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     calcFinalValue();
-    setIsButtonClicked(true);
   };
 
   function calcFinalValue() {
@@ -30,6 +29,7 @@ const Calculator = () => {
     const deno = Math.pow(savingsReturn / 100 + 1, totalyears) - 1;
     const result = (futureValue / deno) * (savingsReturn / 100);
     setRes(result);
+    setIsButtonClicked(true);
     return result;
   }
 
