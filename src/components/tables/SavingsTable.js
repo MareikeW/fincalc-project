@@ -1,4 +1,5 @@
 import React from "react";
+import "./tables-styles.scss";
 
 const SavingsTable = ({years, yearlyStartingBalances, yearlyEndBalances, contribution, interests}) => {
     function createTableBody() {
@@ -48,7 +49,7 @@ const SavingsTable = ({years, yearlyStartingBalances, yearlyEndBalances, contrib
     
       return (
         <div> 
-          <table>
+          <table className="savings-table">
             {/* Table Headers */}
             <thead>
               <tr>

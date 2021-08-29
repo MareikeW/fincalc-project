@@ -95,58 +95,63 @@ const SavingsForm = () => {
 
     return (
         <div>
-            <form className="savings-form" onSubmit={calcResult}>
-                <label htmlFor="starting-amount">Starting Amount</label>
-                <input 
-                    type="number" 
-                    name="startingAmount" 
-                    id="starting-amount" 
-                    value={data.startingAmount} 
-                    onChange={handleChange}
-                    required 
-                />
-
-                <label htmlFor="regular-contribution">Regular Monthly Contribution</label>
-                <input 
-                    type="number" 
-                    name="contribution"
-                    id="regular-contribution"
-                    value={data.contribution}
-                    onChange={handleChange}
-                    required
-                />
-
-                <label htmlFor="compound">Compound</label>
-                <select 
-                    name="compound" 
-                    id="compound"
-                    value={data.compound}
-                    onChange={handleChange}
-                >
-                    <option value="monthly">monthly</option>
-                    <option value="yearly">yearly</option>
-                </select>
-
-                <label htmlFor="return-rate">Return Rate</label>
-                <input 
-                    type="number" 
-                    name="returnRate"
-                    id="return-rate"
-                    value={data.returnRate}
-                    onChange={handleChange}
-                    required
-                />
-
-                <label htmlFor="savings-period">Savings Period</label>
-                <input 
-                    type="number"
-                    name="savingsPeriod" 
-                    id="savings-period" 
-                    value={data.savingsPeriod}
-                    onChange={handleChange}
-                    required 
-                />
-
+            <form className="calculator-container" onSubmit={calcResult}>
+                <div>
+                    <label htmlFor="starting-amount">Starting Amount</label>
+                    <input 
+                        type="number" 
+                        name="startingAmount" 
+                        id="starting-amount" 
+                        value={data.startingAmount} 
+                        onChange={handleChange}
+                        required 
+                    />
+                </div>
+                <div>
+                    <label htmlFor="regular-contribution">Regular Monthly Contribution</label>
+                    <input 
+                        type="number" 
+                        name="contribution"
+                        id="regular-contribution"
+                        value={data.contribution}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div>
+                    <label htmlFor="compound">Compound</label>
+                    <select 
+                        name="compound" 
+                        id="compound"
+                        value={data.compound}
+                        onChange={handleChange}
+                    >
+                        <option value="monthly">monthly</option>
+                        <option value="yearly">yearly</option>
+                    </select>
+                </div>
+                <div>
+                    <label htmlFor="return-rate">Return Rate</label>
+                    <input 
+                        type="number" 
+                        name="returnRate"
+                        id="return-rate"
+                        value={data.returnRate}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div>
+                    <label htmlFor="savings-period">Savings Period</label>
+                    <input 
+                        type="number"
+                        name="savingsPeriod" 
+                        id="savings-period" 
+                        value={data.savingsPeriod}
+                        onChange={handleChange}
+                        required 
+                    />
+                </div>
                 <button type="submit">Calculate</button>
             </form>
 

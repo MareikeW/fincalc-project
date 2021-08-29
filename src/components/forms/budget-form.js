@@ -49,8 +49,6 @@ const BudgetForm = () => {
         <div>
             <div className="budget-container"> 
             <form onSubmit={calcBudget}>
-                {difference >= 1 ? difference : null}
-                <br />
             <div className="table-container">
                 <table>
                     <tr>

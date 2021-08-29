@@ -6,7 +6,7 @@ const Budget = () => {
     return (
         <div>
             <NavBar/>
-            <h1 style={{textAlign:"center"}}>Budget Planner</h1>
+            <h1>Budget Planner</h1>
             <BudgetForm />
         </div>
     )

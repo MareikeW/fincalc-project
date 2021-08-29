@@ -65,9 +65,18 @@ const CompoundInterestTable = ({ startingBalance, endBalance, years, interests }
     for (let i = 0; i <= years.length - 1; i++) {
       data.push({
         year: years[i],
-        startingBalance: startingBalance[i],
-        interest: interests[i],
-        endBalance: endBalance[i],
+        startingBalance: startingBalance[i].toLocaleString("en-US", {
+          style: "currency",
+          currency: "USD"
+        }),
+        interest: interests[i].toLocaleString("en-US", {
+          style: "currency",
+          currency: "USD"
+        }),
+        endBalance: endBalance[i].toLocaleString("en-US", {
+          style: "currency",
+          currency: "USD"
+        }),
       });
     }
     return data
@@ -82,7 +91,7 @@ const CompoundInterestTable = ({ startingBalance, endBalance, years, interests }
 
   return (
     <Styles>
-      <table {...getTableProps()}>
+      <table {...getTableProps()} className="compound-table">
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
