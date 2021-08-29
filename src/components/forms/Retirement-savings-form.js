@@ -1,6 +1,7 @@
 // How much do i need to save (both annually and monthly) to achieve my targeted amount at the beginning of retirement ?
 
 import React, { useState } from "react";
+import "./form-styles.scss";
 
 const Calculator = () => {
   const [currentCost, setCurrentCost] = useState(0);
@@ -10,10 +11,11 @@ const Calculator = () => {
 
   const [futureValue, setFutureValue] = useState(0);
   const [res, setRes] = useState(0);
+  const [isButtonClicked, setIsButtonClicked] = useState(false);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    console.log(calcFinalValue());
+    calcFinalValue();
   };
 
   function calcFinalValue() {
@@ -27,15 +29,16 @@ const Calculator = () => {
     const deno = Math.pow(savingsReturn / 100 + 1, totalyears) - 1;
     const result = (futureValue / deno) * (savingsReturn / 100);
     setRes(result);
+    setIsButtonClicked(true);
     return result;
   }
 
   return (
     <div>
-      <form className="form" onSubmit={handleSubmit}>
+      <form className="calculator-container" onSubmit={handleSubmit}>
         <div className="form__input-group">
           <label htmlFor="current-cost" className="form__label">
-            desired amount targeted at retirement
+            Desired amount at retirement
           </label>
           <input
             type="number"
@@ -48,7 +51,7 @@ const Calculator = () => {
         </div>
         <div className="form__input-group">
           <label htmlFor="inflation-rate" className="form__label">
-            inflation rate
+            Inflation rate
           </label>
           <input
             type="number"
@@ -60,7 +63,7 @@ const Calculator = () => {
         </div>
         <div className="form__input-group">
           <label htmlFor="total-years" className="form__label">
-            Total years you have left to save
+            Total years left to save
           </label>
           <input
             type="number"
@@ -74,7 +77,7 @@ const Calculator = () => {
         </div>
         <div className="form__input-group">
           <label htmlFor="savings-return" className="form__label">
-            Expected Savings return
+            Expected savings return
           </label>
           <input
             type="number"
@@ -90,14 +93,32 @@ const Calculator = () => {
           Calculate
         </button>
       </form>
-      <p>Current value of your money : {currentCost} </p>
-      <p> FutureValue of your money(inflation rate) : {futureValue} </p>.
-      <p>
-        You need to save {res} annually in order to achieve your targeted
-        amount. (including interest from the bank)
-      </p>
-      <p>Annual Savings Required : {res} </p>
-      <p>Monthly Savings Required : {res / 12} </p>
+
+      { isButtonClicked ? <div className="display-result">
+        <p>Current value of your money: {currentCost.toLocaleString("en-US", {
+                      style: "currency",
+                      currency: "USD"
+                    })} </p>
+        <p>FutureValue of your money(inflation rate): {futureValue.toLocaleString("en-US", {
+                      style: "currency",
+                      currency: "USD"
+                    })} </p>
+        <p>You need to save {res.toLocaleString("en-US", {
+                      style: "currency",
+                      currency: "USD"
+                    })} annually in order to achieve your targeted
+          amount. (including interest from the bank)
+        </p>
+        <p>Annual Savings Required: {res.toLocaleString("en-US", {
+                      style: "currency",
+                      currency: "USD"
+                    })} </p>
+        <p>Monthly Savings Required: {(res / 12).toLocaleString("en-US", {
+                      style: "currency",
+                      currency: "USD"
+                    })} </p>
+        </div>
+      : null }
     </div>
   );
 };

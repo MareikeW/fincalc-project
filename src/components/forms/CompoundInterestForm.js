@@ -79,48 +79,52 @@ const calcResult = (event) => {
 
 return (
     <div>
-        <form className="savings-form" onSubmit={calcResult}>
-            <label htmlFor="starting-amount">Starting Amount</label>
-            <input 
-                type="number" 
-                name="startingAmount" 
-                id="starting-amount" 
-                value={data.startingAmount} 
-                onChange={handleChange}
-                required 
-            />
-
-            <label htmlFor="return-rate">Return Rate</label>
-            <input 
-                type="number" 
-                name="returnRate"
-                id="return-rate"
-                value={data.returnRate}
-                onChange={handleChange}
-                required
-            />
-
-            <label htmlFor="investment-period">Investment Period</label>
-            <input 
-                type="number"
-                name="investmentPeriod" 
-                id="investment-period" 
-                value={data.investmentPeriod}
-                onChange={handleChange}
-                required 
-            />
-
+        <form className="calculator-container" onSubmit={calcResult}>
+            <div>
+                <label htmlFor="starting-amount">Starting Amount</label>
+                <input 
+                    type="number" 
+                    name="startingAmount" 
+                    id="starting-amount" 
+                    value={data.startingAmount} 
+                    onChange={handleChange}
+                    required 
+                />
+            </div>
+            <div>
+                <label htmlFor="return-rate">Return Rate</label>
+                <input 
+                    type="number" 
+                    name="returnRate"
+                    id="return-rate"
+                    value={data.returnRate}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
+            <div>
+                <label htmlFor="investment-period">Investment Period</label>
+                <input 
+                    type="number"
+                    name="investmentPeriod" 
+                    id="investment-period" 
+                    value={data.investmentPeriod}
+                    onChange={handleChange}
+                    required 
+                />
+            </div>
             <button type="submit">Calculate</button>
         </form>
         <div className='wrapper'>
-        <OneTimeInvestmentChart endBalance={yearlyEndBalances} />
+        {isButtonClicked ? <OneTimeInvestmentChart endBalance={yearlyEndBalances} /> : null}
        
-        <CompoundInterestTable 
+        {isButtonClicked ? <CompoundInterestTable 
           startingBalance={yearlyStartingBalances} 
           endBalance={yearlyEndBalances} 
           years={years} 
           interests={interests}
-        />
+        /> 
+        : null}
         </div>
     </div>
   );

@@ -1,17 +1,24 @@
-.savings__chart {
+.savings__chart,
+.compound__chart,
+.budget__chart {
     margin: 30px auto;
-    width: 60%;
+    max-width: 80%;
     height: 80vh;
 }
 
-.budget__chart {
-    margin: 100px auto;
-    width: 50%;
-    height: 60vh;
+@media (min-width: 800px) {
+    .savings__chart,
+    .compound__chart,
+    .budget__chart {
+        margin: 30px auto;
+        width: 60%;
+        height: 80vh;
+    }
+
+    .budget__chart {
+        max-width: 40%;
+    }
 }
 
-.compound__chart {
-    height: 20rem;
-    width: 40rem;
-    margin: 5rem auto;
-}
+
+

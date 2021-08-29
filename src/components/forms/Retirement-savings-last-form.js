@@ -44,7 +44,6 @@ const RetirementSavingsLastFor = () => {
             balanceArray.push(balance);
             i++;
         }
-
         setYears(yearsArray);
         setBalance(balanceArray);
         setIsButtonClicked(true);

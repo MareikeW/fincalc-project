@@ -4,14 +4,38 @@ import "./charts-styles.scss"
 
 const options = {
   scales: {
-    yAxes: [
-      {
+    y: {
         ticks: {
           beginAtZero: true,
+          callback: function(value) {
+              let number = value.toLocaleString("en-US", {style: "currency", currency: "USD"});
+              return number;
+            }
         },
-      },
-    ],
+        title: {
+          display: true,
+          text: "Endbalance"
+        }
+    },
+    x: {
+      title: {
+        display: true,
+        text: "Years"
+      }
+    },
   },
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    tooltip: {
+      callbacks: {
+        label: function(context) {
+          let number = context.dataset.data[context.dataIndex].toLocaleString("en-US", {style: "currency", currency: "USD"});
+          return number;
+        }
+      }
+    }
+  }
 };
 
 const OneTimeInvChart = ({ endBalance }) => {
